@@ -1,0 +1,10 @@
+options:
+    buycraft: https://demonnetwork.craftingstore.net
+    discord: https://discord.gg/nQfZYD2
+    serverip: demonfarms.minehut.gg
+    name: &4Demon Farms &7| &cSeason 1
+    borders: &7&m          &c&m            &4&m            &c&m            &7&m          &r
+
+every 5 seconds:
+    loop all players:
+        scoreboard(loop-player)

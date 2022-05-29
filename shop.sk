@@ -1,0 +1,351 @@
+options:
+    prefix: &7[&4Demon Farms&7]
+    borders: &7&m          &c&m            &4&m            &c&m            &7&m          &r
+
+command /shop [<string>]:
+    trigger:
+        if arg-1 = "redstone":
+            open chest inventory with 3 rows named "&4Shop &8- &cRedstone" to player
+            fillInventory(player, 27)
+            format gui slot 10 of player with sticky piston with lore " " and "&cBUY $20 &7(Left-Click)" and "&cSELL $10 &7(Right-Click)" to run function buyItem(player, 20, sticky piston) with "left" click
+            format gui slot 10 of player with sticky piston with lore " " and "&cBUY $20 &7(Left-Click)" and "&cSELL $10 &7(Right-Click)" to run function sellItem(player, 10, sticky piston) with "right" click
+            format gui slot 11 of player with hopper with lore " " and "&cBUY $100 &7(Left-Click)" and "&cSELL $50 &7(Right-Click)" to run function buyItem(player, 100, hopper) with "left" click
+            format gui slot 11 of player with hopper with lore " " and "&cBUY $100 &7(Left-Click)" and "&cSELL $50 &7(Right-Click)" to run function sellItem(player, 50, hopper) with "right" click
+            format gui slot 12 of player with redstone repeater with lore " " and "&cBUY $16 &7(Left-Click)" and "&cSELL $8 &7(Right-Click)" to run function buyItem(player, 16, redstone repeater) with "left" click
+            format gui slot 12 of player with redstone repeater with lore " " and "&cBUY $16 &7(Left-Click)" and "&cSELL $8 &7(Right-Click)" to run function sellItem(player, 8, redstone repeater) with "right" click
+            format gui slot 13 of player with redstone dust with lore " " and "&cBUY $12 &7(Left-Click)" and "&cSELL $6 &7(Right-Click)" to run function buyItem(player, 12, redstone dust) with "left" click
+            format gui slot 13 of player with redstone dust with lore " " and "&cBUY $12 &7(Left-Click)" and "&cSELL $6 &7(Right-Click)" to run function sellItem(player, 6, redstone dust) with "right" click
+            format gui slot 14 of player with redstone comparator with lore " " and "&cBUY $16 &7(Left-Click)" and "&cSELL $8 &7(Right-Click)" to run function buyItem(player, 16, redstone comparator) with "left" click
+            format gui slot 14 of player with redstone comparator with lore " " and "&cBUY $16 &7(Left-Click)" and "&cSELL $8 &7(Right-Click)" to run function sellItem(player, 8, redstone comparator) with "right" click
+            format gui slot 15 of player with observer with lore " " and "&cBUY $40 &7(Left-Click)" and "&cSELL $20 &7(Right-Click)" to run function buyItem(player, 40, observer) with "left" click
+            format gui slot 15 of player with observer with lore " " and "&cBUY $40 &7(Left-Click)" and "&cSELL $20 &7(Right-Click)" to run function sellItem(player, 20, observer) with "right" click
+            format gui slot 16 of player with piston with lore " " and "&cBUY $20 &7(Left-Click)" and "&cSELL $10 &7(Right-Click)" to run function buyItem(player, 20, piston) with "left" click
+            format gui slot 16 of player with piston with lore " " and "&cBUY $20 &7(Left-Click)" and "&cSELL $10 &7(Right-Click)" to run function sellItem(player, 10, piston) with "right" click
+        if arg-1 = "ores":
+            open chest inventory with 3 rows named "&4Shop &8- &cOres" to player
+            fillInventory(player, 27)
+            format gui slot 10 of player with coal with lore " " and "&cBUY $2 &7(Left-Click)" and "&cSELL $1 &7(Right-Click)" to run function buyItem(player, 2, coal) with "left" click
+            format gui slot 10 of player with coal with lore " " and "&cBUY $2 &7(Left-Click)" and "&cSELL $1 &7(Right-Click)" to run function sellItem(player, 1, coal) with "right" click
+            format gui slot 11 of player with iron ingot with lore " " and "&cBUY $6 &7(Left-Click)" and "&cSELL $3 &7(Right-Click)" to run function buyItem(player, 6, iron ingot) with "left" click
+            format gui slot 11 of player with iron ingot with lore " " and "&cBUY $6 &7(Left-Click)" and "&cSELL $3 &7(Right-Click)" to run function sellItem(player, 3, iron ingot) with "right" click
+            format gui slot 12 of player with gold ingot with lore " " and "&cBUY $6 &7(Left-Click)" and "&cSELL $3 &7(Right-Click)" to run function buyItem(player, 6, gold ingot) with "left" click
+            format gui slot 12 of player with gold ingot with lore " " and "&cBUY $6 &7(Left-Click)" and "&cSELL $3 &7(Right-Click)" to run function sellItem(player, 3, gold ingot) with "right" click
+            format gui slot 13 of player with lapis lazuli with lore " " and "&cBUY $12 &7(Left-Click)" and "&cSELL $6 &7(Right-Click)" to run function buyItem(player, 12, lapis lazuli) with "left" click
+            format gui slot 13 of player with lapis lazuli with lore " " and "&cBUY $12 &7(Left-Click)" and "&cSELL $6 &7(Right-Click)" to run function sellItem(player, 6, lapis lazuli) with "right" click
+            format gui slot 14 of player with redstone dust with lore " " and "&cBUY $12 &7(Left-Click)" and "&cSELL $6 &7(Right-Click)" to run function buyItem(player, 12, redstone dust) with "left" click
+            format gui slot 14 of player with redstone dust with lore " " and "&cBUY $12 &7(Left-Click)" and "&cSELL $6 &7(Right-Click)" to run function sellItem(player, 6, redstone dust) with "right" click
+            format gui slot 15 of player with diamond with lore " " and "&cBUY $24 &7(Left-Click)" and "&cSELL $12 &7(Right-Click)" to run function buyItem(player, 24, diamond) with "left" click
+            format gui slot 15 of player with diamond with lore " " and "&cBUY $24 &7(Left-Click)" and "&cSELL $12 &7(Right-Click)" to run function sellItem(player, 12, diamond) with "right" click
+            format gui slot 16 of player with emerald with lore " " and "&cBUY $24 &7(Left-Click)" and "&cSELL $12 &7(Right-Click)" to run function buyItem(player, 24, emerald) with "left" click
+            format gui slot 16 of player with emerald with lore " " and "&cBUY $24 &7(Left-Click)" and "&cSELL $12 &7(Right-Click)" to run function sellItem(player, 12, emerald) with "right" click
+        if arg-1 = "eff10":
+            open chest inventory with 3 rows named "&4Shop &8- &cEFF10 Tools" to player
+            fillInventory(player, 27)
+            format gui slot 11 of player with diamond pickaxe with lore " " and "&cEFF10" and "&c$75000" to run:
+                if getBalance(player) >= 75000:
+                    removeBalance(player, 75000)
+                    give 1 of diamond pickaxe of efficiency 10 to player
+            format gui slot 13 of player with diamond axe with lore " " and "&cEFF10" and "&c$75000" to run:
+                if getBalance(player) >= 75000:
+                    removeBalance(player, 75000)
+                    give 1 of diamond axe of efficiency 10 to player
+            format gui slot 15 of player with diamond shovel with lore " " and "&cEFF10" and "&c$60000" to run:
+                if getBalance(player) >= 60000:
+                    removeBalance(player, 60000)
+                    give 1 of diamond shovel of efficiency 10 to player
+        if arg-1 = "sellwands":
+            open chest inventory with 3 rows named "&4Shop &8- &cSellwands" to player
+            fillInventory(player, 27)
+            format gui slot 13 of player with blaze rod named "&4Sellwand &7| &c1x" with lore " " and "&cBUY ONLY $50000" and "&7(( Better Sellwands @ /buy ))" to run function buyCommand(player, 50000, "&4Sellwand &7| &c1x", "/sellwands %player% 1")
+        if arg-1 = "enchanting":
+            open chest inventory with 3 rows named "&4Shop &8- &cEnchanting" to player
+            fillInventory(player, 27)
+            format gui slot 11 of player with enchanting table with lore " " and "&cBUY ONLY $2048" to run function buyItem(player, 2048, enchanting table)
+            format gui slot 12 of player with bookshelf with lore " " and "&cBUY ONLY $512" to run function buyItem(player, 512, bookshelf)
+            format gui slot 13 of player with experience bottle with lore " " and "&cBUY ONLY $768" to run function buyItem(player, 768, experience bottle)
+            format gui slot 14 of player with book with lore " " and "&cBUY ONLY $128" to run function buyItem(player, 128, book)
+            format gui slot 15 of player with anvil with lore " " and "&cBUY ONLY $1024" to run function buyItem(player, 1024, anvil)
+        if arg-1 = "concrete":
+            open chest inventory with 6 rows named "&4Shop &8- &cConcrete" to player
+            fillInventory(player, 54)
+            format gui slot 13 of player with white concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, white concrete) with "left" click
+            format gui slot 13 of player with white concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, white concrete) with "right" click
+            format gui slot 19 of player with orange concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, orange concrete) with "left" click
+            format gui slot 19 of player with orange concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, orange concrete) with "right" click
+            format gui slot 20 of player with magenta concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, magenta concrete) with "left" click
+            format gui slot 20 of player with magenta concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, magenta concrete) with "right" click
+            format gui slot 21 of player with light blue concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, light blue concrete) with "left" click
+            format gui slot 21 of player with light blue concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, light blue concrete) with "right" click
+            format gui slot 22 of player with yellow concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, yellow concrete) with "left" click
+            format gui slot 22 of player with yellow concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, yellow concrete) with "right" click
+            format gui slot 23 of player with lime concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, lime concrete) with "left" click
+            format gui slot 23 of player with lime concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, lime concrete) with "right" click
+            format gui slot 24 of player with pink concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, pink concrete) with "left" click
+            format gui slot 24 of player with pink concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, pink concrete) with "right" click
+            format gui slot 25 of player with gray concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, gray concrete) with "left" click
+            format gui slot 25 of player with gray concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, gray concrete) with "right" click
+            format gui slot 28 of player with light gray concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, light gray concrete) with "left" click
+            format gui slot 28 of player with light gray concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, light gray concrete) with "right" click
+            format gui slot 29 of player with cyan concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, cyan concrete) with "left" click
+            format gui slot 29 of player with cyan concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, cyan concrete) with "right" click
+            format gui slot 30 of player with purple concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, purple concrete) with "left" click
+            format gui slot 30 of player with purple concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, purple concrete) with "right" click
+            format gui slot 31 of player with blue concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, blue concrete) with "left" click
+            format gui slot 31 of player with blue concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, blue concrete) with "right" click
+            format gui slot 32 of player with brown concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, brown concrete) with "left" click
+            format gui slot 32 of player with brown concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, brown concrete) with "right" click
+            format gui slot 33 of player with green concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, green concrete) with "left" click
+            format gui slot 33 of player with green concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, green concrete) with "right" click
+            format gui slot 34 of player with red concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, red concrete) with "left" click
+            format gui slot 34 of player with red concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, red concrete) with "right" click
+            format gui slot 40 of player with black concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, black concrete) with "left" click
+            format gui slot 40 of player with black concrete with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, black concrete) with "right" click
+        if arg-1 = "blocks":
+            open chest inventory with 3 rows named "&4Shop &8- &cBlocks" to player
+            fillInventory(player, 27)
+            format gui slot 10 of player with grass block with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, grass block) with "left" click
+            format gui slot 10 of player with grass block with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, grass block) with "right" click
+            format gui slot 11 of player with dirt with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, dirt) with "left" click
+            format gui slot 11 of player with dirt with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, dirt) with "right" click
+            format gui slot 12 of player with stone with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, stone) with "left" click
+            format gui slot 12 of player with stone with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, stone) with "right" click
+            format gui slot 13 of player with cobblestone with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, cobblestone) with "left" click
+            format gui slot 13 of player with cobblestone with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, cobblestone) with "right" click
+            format gui slot 14 of player with oak log with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, oak log) with "left" click
+            format gui slot 14 of player with oak log with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, oak log) with "right" click
+            format gui slot 15 of player with oak planks with lore " " and "&cBUY $0.25 &7(Left-Click)" and "&cSELL $0.125 &7(Right-Click)" to run function buyItem(player, 0.5, oak planks) with "left" click
+            format gui slot 15 of player with oak planks with lore " " and "&cBUY $0.25 &7(Left-Click)" and "&cSELL $0.125 &7(Right-Click)" to run function sellItem(player, 0.125, oak planks) with "right" click
+            format gui slot 16 of player with glass with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, glass) with "left" click
+            format gui slot 16 of player with glass with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, glass) with "right" click
+        if arg-1 = "dyes":
+            open chest inventory with 6 rows named "&4Shop &8- &cDyes" to player
+            fillInventory(player, 54)
+            format gui slot 13 of player with white dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, white dye) with "left" click
+            format gui slot 13 of player with white dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, white dye) with "right" click
+            format gui slot 19 of player with orange dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, orange dye) with "left" click
+            format gui slot 19 of player with orange dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, orange dye) with "right" click
+            format gui slot 20 of player with magenta dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, magenta dye) with "left" click
+            format gui slot 20 of player with magenta dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, magenta dye) with "right" click
+            format gui slot 21 of player with light blue dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, light blue dye) with "left" click
+            format gui slot 21 of player with light blue dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, light blue dye) with "right" click
+            format gui slot 22 of player with yellow dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, yellow dye) with "left" click
+            format gui slot 22 of player with yellow dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, yellow dye) with "right" click
+            format gui slot 23 of player with lime dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, lime dye) with "left" click
+            format gui slot 23 of player with lime dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, lime dye) with "right" click
+            format gui slot 24 of player with pink dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, pink dye) with "left" click
+            format gui slot 24 of player with pink dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, pink dye) with "right" click
+            format gui slot 25 of player with gray dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, gray dye) with "left" click
+            format gui slot 25 of player with gray dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, gray dye) with "right" click
+            format gui slot 28 of player with light gray dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, light gray dye) with "left" click
+            format gui slot 28 of player with light gray dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, light gray dye) with "right" click
+            format gui slot 29 of player with cyan dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, cyan dye) with "left" click
+            format gui slot 29 of player with cyan dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, cyan dye) with "right" click
+            format gui slot 30 of player with purple dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, purple dye) with "left" click
+            format gui slot 30 of player with purple dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, purple dye) with "right" click
+            format gui slot 31 of player with blue dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, blue dye) with "left" click
+            format gui slot 31 of player with blue dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, blue dye) with "right" click
+            format gui slot 32 of player with brown dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, brown dye) with "left" click
+            format gui slot 32 of player with brown dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, brown dye) with "right" click
+            format gui slot 33 of player with green dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, green dye) with "left" click
+            format gui slot 33 of player with green dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, green dye) with "right" click
+            format gui slot 34 of player with red dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, red dye) with "left" click
+            format gui slot 34 of player with red dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, red dye) with "right" click
+            format gui slot 40 of player with black dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function buyItem(player, 1, black dye) with "left" click
+            format gui slot 40 of player with black dye with lore " " and "&cBUY $1 &7(Left-Click)" and "&cSELL $0.5 &7(Right-Click)" to run function sellItem(player, 0.5, black dye) with "right" click
+        if arg-1 = "farming":
+            open chest inventory with 6 rows named "&4Shop &8- &cFarming" to player
+            fillInventory(player, 54)
+            format gui slot 13 of player with nether wart with lore " " and "&cBUY $2500 &7(Left-Click)" and "&cSELL $4.5 &7(Right-Click)" to run function buyItem(player, 3500, nether wart) with "left" click
+            format gui slot 13 of player with nether wart with lore " " and "&cBUY $2500 &7(Left-Click)" and "&cSELL $4.5 &7(Right-Click)" to run function sellItem(player, 4.5, nether wart) with "right" click
+            format gui slot 19 of player with wheat with lore " " and "&cSELL ONLY $2" to run function sellItem(player, 2, wheat)
+            format gui slot 20 of player with carrot with lore " " and "&cBUY $250 &7(Left-Click)" and "&cSELL $2 &7(Right-Click)" to run function buyItem(player, 500, carrot) with "left" click
+            format gui slot 20 of player with carrot with lore " " and "&cBUY $250 &7(Left-Click)" and "&cSELL $2 &7(Right-Click)" to run function sellItem(player, 2, carrot) with "right" click
+            format gui slot 21 of player with potato with lore " " and "&cBUY $650 &7(Left-Click)" and "&cSELL $3 &7(Right-Click)" to run function buyItem(player, 750, potato) with "left" click
+            format gui slot 21 of player with potato with lore " " and "&cBUY $650 &7(Left-Click)" and "&cSELL $3 &7(Right-Click)" to run function sellItem(player, 3, poato) with "right" click
+            format gui slot 22 of player with melon slice with lore " " and "&cSELL ONLY $0.2" to run function sellItem(player, 0.2, melon slice)
+            format gui slot 23 of player with pumpkin with lore " " and "&cSELL ONLY $1" to run function sellItem(player, 1, pumpkin)
+            format gui slot 24 of player with sugar cane with lore " " and "&cBUY $2000" and "&cSELL $1.3" to run function buyItem(player, 2500, sugar cane) with "left" click
+            format gui slot 24 of player with sugar cane with lore " " and "&cBUY $2000" and "&cSELL $1.3" to run function sellItem(player, 1.3, sugar cane) with "right" click
+            format gui slot 25 of player with cactus with lore " " and "&cBUY $7500" and "&cSELL $1.4" to run function buyItem(player, 7500, cactus) with "left" click
+            format gui slot 25 of player with cactus with lore " " and "&cBUY $7500" and "&cSELL $1.4" to run function sellItem(player, 1.4, cactus) with "right" click
+            format gui slot 30 of player with melon seed with lore " " and "&cBUY $1500 &7(Left-Click)" to run function buyItem(player, 2500, melon seed) with "left" click
+            format gui slot 31 of player with wheat seed with lore " " and "&cBUY $20 &7(Left-Click)" to run function buyItem(player, 100, wheat seed) with "left" click
+            format gui slot 32 of player with pumpkin seed with lore " " and "&cBUY $3000 &7(Left-Click)" to run function buyItem(player, 3000, pumpkin seed) with "left" click
+            format gui slot 37 of player with water bucket with lore " " and "&cBUY ONLY $250" to run function buyItem(player, 250, water bucket)
+            format gui slot 38 of player with blue ice with lore " " and "&cBUY ONLY $12.5" to run function buyItem(player, 12.5, blue ice)
+            format gui slot 40 of player with string with lore " " and "&cBUY ONLY $15" to run function buyItem(player, 15, string)
+            format gui slot 42 of player with soul sand with lore " " and "&cBUY ONLY $250" to run function buyItem(player, 250, soul sand)
+            format gui slot 43 of player with sand with lore " " and "&cBUY ONLY $1" to run function buyItem(player, 1, sand)
+        if arg-1 is not set:
+            open chest inventory with 5 rows named "&4Shop &8- &cCategories" to player
+            fillInventory(player, 45)
+            format gui slot 13 of player with glowing grass block named "&cBlocks" to run player command "/shop blocks"
+            format gui slot 19 of player with glowing redstone named "&cRedstone" to run player command "/shop redstone"
+            format gui slot 20 of player with glowing diamond named "&cOres" to run player command "/shop ores"
+            format gui slot 21 of player with glowing netherite pickaxe named "&cEFF10 Tools" to run player command "/shop eff10"
+            format gui slot 22 of player with glowing blaze rod named "&cSellwands" to run player command "/shop sellwands"
+            format gui slot 23 of player with glowing lapis lazuli named "&cEnchanting" to run player command "/shop enchanting"
+            format gui slot 24 of player with glowing white concrete named "&cConcrete" to run player command "/shop concrete"
+            format gui slot 25 of player with glowing white dye named "&cDyes" to run player command "/shop dyes"
+            format gui slot 31 of player with glowing wheat named "&cFarming" to run player command "/shop farming"
+
+command /sell:
+    trigger:
+        delete {shop::tempdata::wheatAmount::%uuid of player%}
+        delete {shop::tempdata::carrotAmount::%uuid of player%}
+        delete {shop::tempdata::potatoAmount::%uuid of player%}
+        delete {shop::tempdata::netherwartAmount::%uuid of player%}
+        delete {shop::tempdata::melonSliceAmount::%uuid of player%}
+        delete {shop::tempdata::pumpkinAmount::%uuid of player%}
+        delete {shop::tempdata::sugarCaneAmount::%uuid of player%}
+        delete {shop::tempdata::cactusAmount::%uuid of player%}
+        delete {shop::tempdata::sellList::%uuid of player%::*}
+        if inventory of player does not contain wheat or carrot or potato or nether wart or melon slice or pumpkin or sugar cane or cactus:
+            send "{@prefix} You don't have any items to sell!" to player
+            stop
+        if inventory of player contains wheat:
+            set {shop::tempdata::wheatAmount::%uuid of player%} to amount of wheat in inventory of player
+            remove {shop::tempdata::wheatAmount::%uuid of player%} of wheat from inventory of player
+            add "&4x%{shop::tempdata::wheatAmount::%uuid of player%}% &7of &4wheat &7for &4$&4%{shop::tempdata::wheatAmount::%uuid of player%} * 1.75%" to {shop::tempdata::sellList::%uuid of player%::*}
+        if inventory of player contains carrot:
+            set {shop::tempdata::carrotAmount::%uuid of player%} to amount of carrot in inventory of player
+            remove {shop::tempdata::carrotAmount::%uuid of player%} of carrot from inventory of player
+            add "&4x%{shop::tempdata::carrotAmount::%uuid of player%}% &7of &4carrot &7for &4$&4%{shop::tempdata::carrotAmount::%uuid of player%} * 2%" to {shop::tempdata::sellList::%uuid of player%::*}
+        if inventory of player contains potato:
+            set {shop::tempdata::potatoAmount::%uuid of player%} to amount of potato in inventory of player
+            remove {shop::tempdata::potatoAmount::%uuid of player%} of potato from inventory of player
+            add "&4x%{shop::tempdata::potatoAmount::%uuid of player%}% &7of &4inventory &7for &4$&4%{shop::tempdata::potatoAmount::%uuid of player%} * 3%" to {shop::tempdata::sellList::%uuid of player%::*}
+        if inventory of player contains nether wart:
+            set {shop::tempdata::netherwartAmount::%uuid of player%} to amount of nether wart in inventory of player
+            remove {shop::tempdata::netherwartAmount::%uuid of player%} of nether wart from inventory of player
+            add "&4x%{shop::tempdata::netherwartAmount::%uuid of player%}% &7of &4nether wart &7for &4$&4%{shop::tempdata::netherwartAmount::%uuid of player%} * 4.5%" to {shop::tempdata::sellList::%uuid of player%::*}
+        if inventory of player contains melon slice:
+            set {shop::tempdata::melonSliceAmount::%uuid of player%} to amount of melon slice in inventory of player
+            remove {shop::tempdata::melonSliceAmount::%uuid of player%} of melon slice from inventory of player
+            add "&4x%{shop::tempdata::melonSliceAmount::%uuid of player%}% &7of &4melon slice &7for &4$&4%{shop::tempdata::melonSliceAmount::%uuid of player%} * 0.20%" to {shop::tempdata::sellList::%uuid of player%::*}
+        if inventory of player contains pumpkin:
+            set {shop::tempdata::pumpkinAmount::%uuid of player%} to amount of pumpkin in inventory of player
+            remove {shop::tempdata::pumpkinAmount::%uuid of player%} of pumpkin from inventory of player
+            add "&4x%{shop::tempdata::pumpkinAmount::%uuid of player%}% &7of &4pumpkin &7for &4$&4%{shop::tempdata::pumpkinAmount::%uuid of player%} * 1%" to {shop::tempdata::sellList::%uuid of player%::*}
+        if inventory of player contains sugar cane:
+            set {shop::tempdata::sugarCaneAmount::%uuid of player%} to amount of sugar cane in inventory of player
+            remove {shop::tempdata::sugarCaneAmount::%uuid of player%} of sugar cane from inventory of player
+            add "&4x%{shop::tempdata::sugarCaneAmount::%uuid of player%}% &7of &4sugar cane &7for &4$&4%{shop::tempdata::sugarCaneAmount::%uuid of player%} * 1.3%" to {shop::tempdata::sellList::%uuid of player%::*}
+        if inventory of player contains cactus:
+            set {shop::tempdata::cactusAmount::%uuid of player%} to amount of cactus in inventory of player
+            remove {shop::tempdata::cactusAmount::%uuid of player%} of cactus from inventory of player
+            add "&4x%{shop::tempdata::cactusAmount::%uuid of player%}% &7of &4cactus &7for &4$&4%{shop::tempdata::cactusAmount::%uuid of player%} * 1.4%" to {shop::tempdata::sellList::%uuid of player%::*}
+        set {_total} to ({shop::tempdata::wheatAmount::%uuid of player%} * 1.75) + ({shop::tempdata::carrotAmount::%uuid of player%} * 2) + ({shop::tempdata::potatoAmount::%uuid of player%} * 3) + ({shop::tempdata::netherwartAmount::%uuid of player%} * 4.5) + ({shop::tempdata::melonSliceAmount::%uuid of player%} * 0.2) + ({shop::tempdata::pumpkinAmount::%uuid of player%} * 1) + ({shop::tempdata::sugarCaneAmount::%uuid of player%} * 1.3) + ({shop::tempdata::cactusAmount::%uuid of player%} * 1.4)
+        set {_multiplier} to getMultiplier(player)
+        add ({boosters::localbooster::%uuid of player%::amount} - 1) to {_multiplier} if {boosters::localbooster::%uuid of player%::*} is set
+        add ({boosters::globalbooster::amount} - 1) to {_multiplier} if {boosters::globalbooster::*} is set
+        set {_finishedAmount} to {_total} * {_multiplier}
+        addBalance(player, {_finishedAmount})
+        send "{@borders}" to player
+        send "&4Sell: &c$&c%{_finishedAmount}%" to player
+        send "&7 " to player
+        loop {shop::tempdata::sellList::%uuid of player%::*}:
+            send loop-value to player
+        send "&7 " to player if {boosters::globalbooster::*} or {boosters::localbooster::%uuid of player%::*} is set
+        send "&c(( GET A BOOSTER @ /BUY OR /GEMSHOP ))" to player if {boosters::globalbooster::*} and {boosters::localbooster::%uuid of player%::*} is not set
+        send "&c(( MULTIPLIED BY YOUR LOCAL BOOSTER ))" to player if {boosters::localbooster::%uuid of player%::*} is set
+        send "&c(( MULTIPLIED BY THE GLOBAL BOOSTER ))" to player if {boosters::globalbooster::*} is set
+        send "{@borders}" to player
+
+command /gemshop [<string>]:
+    trigger:
+        if arg-1 = "boosters":
+            open chest inventory with 3 rows named "&4Gem Shop &8-> &cBoosters" to player
+            fillInventory(player, 27)
+            format gui slot 12 of player with paper named "&4Global Booster" with lore " " and "&cDuration: &415m" and "&cMultiplier: &4x1.15" and " " and "&cCost: &4500 gems" to run:
+                if getGems(player) < 500:
+                    send "{@prefix} You don't have &4500 gems!" to player
+                    stop
+                removeGems(player, 500)
+                execute console command "/boosters giveGlobal %player% 15m 1.15"
+                send "{@prefix} You bought a &4global booster &7for &4500 gems!" to player
+                stop
+            format gui slot 14 of player with paper named "&4Local Booster" with lore " " and "&cDuration: &41hr" and "&cMultiplier: &4x1.35" and " " and "&cCost: &41250 gems" to run:
+                if getGems(player) < 1250:
+                    send "{@prefix} You don't have &41250 gems!" to player
+                    stop
+                removeGems(player, 1250)
+                execute console command "/boosters giveLocal %player% 1h 1.35"
+                send "{@prefix} You bought a &4local booster &7for &41250 gems!" to player
+                stop
+            stop
+        if arg-1 = "nethertools":
+            open chest inventory with 3 rows named "&4Gem Shop &8-> &cNetherite Tools" to player
+            fillInventory(player, 27)
+            format gui slot 10 of player with netherite axe with lore " " and "&cCost: &425 Gems" to run:
+                if getGems(player) < 25:
+                    send "{@prefix} You need 25 gems for this" to player
+                    stop
+                removeGems(player, 25)
+                give 1 of netherite axe to player
+                send "{@prefix} You bought a netherite axe for &425 gems!" to player
+                stop
+            format gui slot 12 of player with netherite shovel with lore " " and "&cCost: &415 Gems" to run:
+                if getGems(player) < 15:
+                    send "{@prefix} You need 15 gems for this" to player
+                    stop
+                removeGems(player, 15)
+                give 1 of netherite shovel to player
+                send "{@prefix} You bought a netherite axe for &415 gems!" to player
+                stop
+            format gui slot 14 of player with netherite hoe with lore " " and "&cCost: &420 Gems" to run:
+                if getGems(player) < 20:
+                    send "{@prefix} You need 20 gems for this" to player
+                    stop
+                removeGems(player, 20)
+                give 1 of netherite hoe to player
+                send "{@prefix} You bought a netherite axe for &420 gems!" to player
+                stop
+            format gui slot 16 of player with netherite pickaxe with lore " " and "&cCost: &425 Gems" to run:
+                if getGems(player) < 25:
+                    send "{@prefix} You need 25 gems for this" to player
+                    stop
+                removeGems(player, 25)
+                give 1 of netherite pickaxe to player
+                send "{@prefix} You bought a netherite axe for &425 gems!" to player
+                stop
+            stop
+        if arg-1 = "money":
+            open chest inventory with 3 rows named "&4Gem Shop &8-> &cMoney" to player
+            fillInventory(player, 27)
+            format gui slot 12 of player with diamond named "&4$25000" with lore " " and "&cCost: 250 gems" to run:
+                if getGems(player) < 250:
+                    send "{@prefix} You need 205 gems for this" to player
+                    stop
+                removeGems(player, 250)
+                addBalance(player, 25000)
+                send "{@prefix} You bought &4$25000 &7for &4250 gems!" to player
+                stop
+            format gui slot 14 of player with emerald named "&4$60000" with lore " " and "&cCost: 500 gems" to run:
+                if getGems(player) < 500:
+                    send "{@prefix} You need 205 gems for this" to player
+                    stop
+                removeGems(player, 500)
+                addBalance(player, 60000)
+                send "{@prefix} You bought &4$60000 &7for &4500 gems!" to player
+                stop
+            stop
+        open chest inventory with 3 rows named "&4Gem Shop" to player
+        fillInventory(player, 27)
+        format gui slot 10 of player with shiny paper named "&4Boosters" to run player command "/gemshop boosters"
+        format gui slot 12 of player with shiny netherite pickaxe named "&4Netherite Tools" to run player command "/gemshop nethertools"
+        format gui slot 14 of player with shiny emerald named "&4Money" to run player command "/gemshop money"
+        format gui slot 16 of player with shiny diamond hoe named "&4Hoe Autoplanter" with lore " " and "&cCost: &4750 gems" to run:
+            if getGems(player) < 750:
+                send "{@prefix} You don't have enough!" to player
+                stop
+            removeGems(player, 750)
+            add uuid of player to {reallysecretivelist::*}
+            execute console command "/lp user %player% permission set hoe.autoreplant true"
+
+command /resetallautoreplanters:
+    permission: op
+    trigger:
+        loop {reallysecretivelist::*}:
+            execute console command "/lp user %(loop-value parsed as an offline player)% permission set hoe.autoreplant.false"
+            broadcast "&7Resetted %(loop-value parsed as an offline player)%"

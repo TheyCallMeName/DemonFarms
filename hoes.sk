@@ -1,0 +1,170 @@
+options:
+    prefix: &8[&4Demon Farms&8]&7
+    borders: &7&m          &c&m            &4&m            &c&m            &7&m          &r
+    hoename: &4Harvest&8Hoe
+
+# Main Hoe Command
+command /hoe [<string>]:
+    trigger:
+        if arg-1 = "autoplanter":
+            if player has permission "hoe.autoreplant":
+                if name of player's held item != "{@hoename}":
+                    send "{@prefix} You must be holding your {@hoename}!" to player
+                if name of player's held item = "{@hoename}":
+                    set {_replanter::*} to uncoloured line 5 of the lore of the player's held item split at ": "
+                    if ({_replanter::2} parsed as an boolean) = true:
+                        set line 5 of the lore of the player's held item to "&7Autoreplant: &4&ofalse"
+                    if ({_replanter::2} parsed as an boolean) = false:
+                        set line 5 of the lore of the player's held item to "&7Autoreplant: &4&otrue"
+                    send "{@prefix} You toggled &cautoplanter &7to &4&o%line 5 of the lore of the player's held item%" to player
+                    stop
+        if arg-1 = "help":
+            send "&7 " to player
+            send "{@borders}" to player
+            send "{@hoename} &7Help" to player
+            send "&7 " to player
+            send "&4/hoe autoplanter &8 &7Toggles on/off your &cautoplanter!" to player
+            send "&4/hoe help &8- &7Shows this help menu!" to player
+            send "&4/hoe start &8- &7Get your {@hoename}!" to player
+            send "{@borders}" to player
+        if arg-1 = "start":
+            send "{@prefix} You got a {@hoename}" to player
+            give 1 of diamond hoe named "{@hoename}" with lore "&r" and "&7Hoe Level: &41" and "&7Level Up Progress: &40" and "&7Gem Drop Chance: &41" and "&7Autoreplant: &4&ofalse" to player
+        else:
+            send "&7 " to player
+            send "{@borders}" to player
+            send "{@hoename} &7Help" to player
+            send "&7 " to player
+            send "&4/hoe autoplanter &8 &7Toggles on/off your &cautoplanter!" to player
+            send "&4/hoe help &8- &7Shows this help menu!" to player
+            send "&4/hoe start &8- &7Get your {@hoename}!" to player
+            send "{@borders}" to player
+
+on break:
+    event-block is not wheat or potato plant or carrot plant or nether wart
+    name of player's held item = "{@hoename}"
+    cancel event
+
+on right click with diamond hoe:
+    name of player's held item = "{@hoename}"
+    cancel event
+
+on break of wheat or potato plant or carrot plant or nether wart:
+    if name of player's held item != "{@hoename}":
+        cancel event
+        send "{@prefix} You need a {@hoename} &7to farm, &4/hoe start" to player
+    if event-block is not fully grown wheat plant or fully grown potato plant or fully grown carrot plant or fully grown nether wart plant:
+        cancel event
+        send action bar "{@prefix} You can't break crops that aren't fully grown" to player
+        stop
+    if name of player's held item = "{@hoename}":
+        set {_random} to random integer between 1 and 3
+        give 1 of event-block to player
+        cancel drops
+        set {_loc} to location of event-block
+        set {_level::*} to uncoloured line 2 of the lore of the player's held item split at ": "
+        set {_levelprog::*} to uncoloured line 3 of the lore of the player's held item split at ": "
+        set {_gemdrop::*} to uncoloured line 4 of the lore of the player's held item split at ": "
+        set {_replanter::*} to uncoloured line 5 of the lore of the player's held item split at ": "
+        if event-block = wheat:
+            add {_random} of wheat to inventory of player
+            add {_random} of wheat seed to inventory of player
+            if ({_replanter::2} parsed as an boolean) = true:
+                if inventory of player does not contain wheat seed:
+                    send "{@prefix} You don't have a &4wheat seed, &7So autoplanter didn't replant." to player
+                if inventory of player contain wheat seed:
+                    add 1 of wheat to inventory of player
+                    remove 1 of wheat seed from inventory of player
+                    wait 1 tick
+                    set block at {_loc} to freshly planted wheat plant
+            chance of ({_level::2} parsed as an integer)%:
+                add 1 of wheat to inventory of player
+                send "{@prefix} You recieved an extra &4wheat &7because of your harvest hoe level!" to player
+            chance of ({_gemdrop::2} parsed as an integer)%:
+                addGems(player, 1)
+                send "{@prefix} You recieved &41 gem &7from your harvest hoe!" to player
+            set line 3 of the lore of the player's held item to "&7Level Up Progress: &4%({_levelprog::2} parsed as an number) + 0.01%"
+            if ({_level::2} parsed as an integer) >= 100:
+                send "{@prefix} Since you got a maxed out harvest hoe, You got &4100 gems &7for maxing out your level up progress!" to player
+                addGems(player, 100)
+                set line 3 of the lore of the player's held item to "&7Level Up Progress: &40"
+            if ({_levelprog::2} parsed as an integer) >= 100:
+                send "{@prefix} You upgraded your harvest hoe!" to player
+                set line 2 of the lore of the player's held item to "&7Hoe Level: &4&%({_level::2} parsed as an integer) + 1%"
+                set line 3 of the lore of the player's held item to "&7Level Up Progress: &40"
+                set line 4 of the lore of the player's held item to "&7Gem Drop Chance: &4%({_gemdrop::2} parsed as an integer) + 1%"
+        if event-block = potato plant:
+            add {_random} of potato to inventory of player
+            if ({_replanter::2} parsed as an boolean) = true:
+                if inventory of player does not contain potato:
+                    send "{@prefix} You don't have a &4potato, &7So autoplanter didn't replant." to player
+                if inventory of player contain potato:
+                    remove 1 of potato from inventory of player
+                    wait 1 tick
+                    set block at {_loc} to freshly planted potato plant
+            chance of ({_level::2} parsed as an integer)%:
+                add 1 of potato to inventory of player
+                send "{@prefix} You recieved an extra &4potato &7because of your harvest hoe level!" to player
+            chance of ({_gemdrop::2} parsed as an integer)%:
+                addGems(player, 1)
+                send "{@prefix} You recieved &41 gem &7from your harvest hoe!" to player
+            set line 3 of the lore of the player's held item to "&7Level Up Progress: &4%({_levelprog::2} parsed as an number) + 0.01%"
+            if ({_level::2} parsed as an integer) >= 100:
+                send "{@prefix} Since you got a maxed out harvest hoe, You got &4100 gems &7for maxing out your level up progress!" to player
+                addGems(player, 100)
+                set line 3 of the lore of the player's held item to "&7Level Up Progress: &40"
+            if ({_levelprog::2} parsed as an integer) >= 100:
+                send "{@prefix} You upgraded your harvest hoe!" to player
+                set line 2 of the lore of the player's held item to "&7Hoe Level: &4&%({_level::2} parsed as an integer) + 1%"
+                set line 3 of the lore of the player's held item to "&7Level Up Progress: &40"
+                set line 4 of the lore of the player's held item to "&7Gem Drop Chance: &4%({_gemdrop::2} parsed as an integer) + 1%"
+        if event-block = carrot plant:
+            add {_random} of carrot to inventory of player
+            if ({_replanter::2} parsed as an boolean) = true:
+                if inventory of player does not contain carrot:
+                    send "{@prefix} You don't have a &4carrot, &7So autoplanter didn't replant." to player
+                if inventory of player contain carrot:
+                    remove 1 of carrot from inventory of player
+                    wait 1 tick
+                    set block at {_loc} to freshly planted carrot plant
+            chance of ({_level::2} parsed as an integer)%:
+                add 1 of carrot to inventory of player
+                send "{@prefix} You recieved an extra &4carrot &7because of your harvest hoe level!" to player
+            chance of ({_gemdrop::2} parsed as an integer)%:
+                addGems(player, 1)
+                send "{@prefix} You recieved &41 gem &7from your harvest hoe!" to player
+            set line 3 of the lore of the player's held item to "&7Level Up Progress: &4%({_levelprog::2} parsed as an number) + 0.01%"
+            if ({_level::2} parsed as an integer) >= 100:
+                send "{@prefix} Since you got a maxed out harvest hoe, You got &4100 gems &7for maxing out your level up progress!" to player
+                addGems(player, 100)
+                set line 3 of the lore of the player's held item to "&7Level Up Progress: &40"
+            if ({_levelprog::2} parsed as an integer) >= 100:
+                send "{@prefix} You upgraded your harvest hoe!" to player
+                set line 2 of the lore of the player's held item to "&7Hoe Level: &4&%({_level::2} parsed as an integer) + 1%"
+                set line 3 of the lore of the player's held item to "&7Level Up Progress: &40"
+                set line 4 of the lore of the player's held item to "&7Gem Drop Chance: &4%({_gemdrop::2} parsed as an integer) + 1%"
+        if event-block = nether wart:
+            add {_random} of nether wart to inventory of player
+            if ({_replanter::2} parsed as an boolean) = true:
+                if inventory of player does not contain nether wart:
+                    send "{@prefix} You don't have a &4nether wart, &7So autoplanter didn't replant." to player
+                if inventory of player contain nether wart:
+                    remove 1 of nether wart from inventory of player
+                    wait 1 tick
+                    set block at {_loc} to freshly planted nether wart plant
+            chance of ({_level::2} parsed as an integer)%:
+                add 1 of nether wart to inventory of player
+                send "{@prefix} You recieved an extra &4nether wart &7because of your harvest hoe level!" to player
+            chance of ({_gemdrop::2} parsed as an integer)%:
+                addGems(player, 1)
+                send "{@prefix} You recieved &41 gem &7from your harvest hoe!" to player
+            set line 3 of the lore of the player's held item to "&7Level Up Progress: &4%({_levelprog::2} parsed as an number) + 0.01%"
+            if ({_level::2} parsed as an integer) >= 100:
+                send "{@prefix} Since you got a maxed out harvest hoe, You got &4100 gems &7for maxing out your level up progress!" to player
+                addGems(player, 100)
+                set line 3 of the lore of the player's held item to "&7Level Up Progress: &40"
+            if ({_levelprog::2} parsed as an integer) >= 100:
+                send "{@prefix} You upgraded your harvest hoe!" to player
+                set line 2 of the lore of the player's held item to "&7Hoe Level: &4&%({_level::2} parsed as an integer) + 1%"
+                set line 3 of the lore of the player's held item to "&7Level Up Progress: &40"
+                set line 4 of the lore of the player's held item to "&7Gem Drop Chance: &4%({_gemdrop::2} parsed as an integer) + 1%"

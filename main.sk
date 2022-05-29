@@ -1,0 +1,445 @@
+options:
+    buycraft: https://demonicnetwork.craftingstore.net
+    discord: https://discord.gg/nQfZYD2
+    serverip: demonfarms.minehut.gg
+    name: &4Demon Farms &7| &cSeason 1
+    prefix: &8[&4Demon Farms&8]&7
+    borders: &7&m          &c&m            &4&m            &c&m            &7&m          &r
+
+every 600 seconds:
+    execute console command "/broadcast Want better ranks? /buy"
+    wait 150 seconds
+    execute console command "/broadcast Do /discord to join our discord, We might be having a giveaway right now :D"
+    wait 150 seconds
+    execute console command "/broadcast Were currently HIRING builders and moderators! To apply, /discord -> ##staff-applications"
+
+# Reclaim command
+command /reclaim:
+    trigger:
+        if {reclaimed::%uuid of player%} = true:
+            send "{@prefix} You already reclaimed your rewards!" to player
+            stop
+        set {reclaimed::%uuid of player%} to true
+        if hasPermission(player, "reclaim.demonplus") = true:
+            execute console command "/sellwands %player% 7"
+            execute console command "/multiplier give %player% .7"
+            execute console command "/boosters giveGlobal %player% 1h 2"
+            execute console command "/boosters giveLocal %player% 1h 2"
+            send "{@borders}" to all players
+            send "&4Reclaim!" to all players
+            send "&7 " to all players
+            send "&4%sender% &7has reclaimed their &4DONATOR PERKS!" to all players
+            send "{@borders}" to all players
+            stop
+        if hasPermission(player, "reclaim.demon") = true:
+            execute console command "/sellwands %player% 6"
+            execute console command "/multiplier give %player% .6"
+            execute console command "/boosters giveGlobal %player% 1h 1.75"
+            execute console command "/boosters giveLocal %player% 1h 1.75"
+            send "{@borders}" to all players
+            send "&4Reclaim!" to all players
+            send "&7 " to all players
+            send "&4%sender% &7has reclaimed their &4DONATOR PERKS!" to all players
+            send "{@borders}" to all players
+            stop
+        if hasPermission(player, "reclaim.lord") = true:
+            execute console command "/sellwands %player% 5"
+            execute console command "/multiplier give %player% .5"
+            execute console command "/boosters giveGlobal %player% 30m 1.5"
+            execute console command "/boosters giveLocal %player% 30m 1.5"
+            send "{@borders}" to all players
+            send "&4Reclaim!" to all players
+            send "&7 " to all players
+            send "&4%sender% &7has reclaimed their &4DONATOR PERKS!" to all players
+            send "{@borders}" to all players
+            stop
+        if hasPermission(player, "reclaim.lord") = true:
+            execute console command "/sellwands %player% 4"
+            execute console command "/multiplier give %player% .4"
+            execute console command "/boosters giveGlobal %player% 20m 1.5"
+            execute console command "/boosters giveLocal %player% 20m 1.5"
+            send "{@borders}" to all players
+            send "&4Reclaim!" to all players
+            send "&7 " to all players
+            send "&4%sender% &7has reclaimed their &4DONATOR PERKS!" to all players
+            send "{@borders}" to all players
+            stop
+        if hasPermission(player, "reclaim.pro") = true:
+            execute console command "/sellwands %player% 3"
+            execute console command "/multiplier give %player% .3"
+            execute console command "/boosters giveGlobal %player% 20m 1.35"
+            execute console command "/boosters giveLocal %player% 20m 1.35"
+            send "{@borders}" to all players
+            send "&4Reclaim!" to all players
+            send "&7 " to all players
+            send "&4%sender% &7has reclaimed their &4DONATOR PERKS!" to all players
+            send "{@borders}" to all players
+            stop
+        if hasPermission(player, "reclaim.mvp") = true:
+            execute console command "/sellwands %player% 2"
+            execute console command "/multiplier give %player% .2"
+            execute console command "/boosters giveGlobal %player% 10m 1.25"
+            send "{@borders}" to all players
+            send "&4Reclaim!" to all players
+            send "&7 " to all players
+            send "&4%sender% &7has reclaimed their &4DONATOR PERKS!" to all players
+            send "{@borders}" to all players
+            stop
+        if hasPermission(player, "reclaim.donor") = true:
+            execute console command "/sellwands %player% 1"
+            execute console command "/multiplier give %player% .15"
+            send "{@borders}" to all players
+            send "&4Reclaim!" to all players
+            send "&7 " to all players
+            send "&4%sender% &7has reclaimed their &4DONATOR PERKS!" to all players
+            send "{@borders}" to all players
+            stop
+
+on server list ping:
+    set the fake player count to (number of online players + 15)
+
+command /resetreclaim [<player>]:
+    permission: op
+    trigger:
+        delete {reclaimed::%uuid of arg-1%}
+
+command /help:
+    trigger:
+        open chest inventory with 4 rows named "&4Help" to player
+        fillInventory(player, 36)
+        format gui slot 10 of player with shiny diamond hoe named "&4Harvest Hoes &8| &c/hoes" with lore " " and "&cWhat are Harvest Hoes?" and "&8-> &4Harvest Hoes are what you need to farm" and "&8-> &4They can give you a gem by 1%% chance" and "&8-> &4Overtime when you farm, It gets better"
+        format gui slot 12 of player with shiny name tag named "&4Ranks &8| &c/ranks" with lore " " and "&cWhat are ranks?" and "&8-> &4Ranks give you stuff that non-ranks don't get" and "&8-> &4Only available @ &c/buy &4OR &c/ranks"
+        format gui slot 14 of player with shiny wheat named "&4Shop &8| &c/shop" with lore " " and "&cWhat is the shop?" and "&8-> &4Shop is where you buy / sell stuff" and "&8-> &4There's also /sell to sell items faster"
+        format gui slot 16 of player with shiny diamond named "&4Gems &8| &c/gemshop, /gemtop" with lore " " and "&cWhat are gems?" and "&8-> &4Gems is the currency you get for farming!" and "&8-> &4You can buy special items and" and "&8-> &4Win REAL LIFE money!"
+        format gui slot 20 of player with shiny paper named "&4Boosters &8| &c/boosters" with lore " " and "&cWhat are boosters?" and "&8-> &4Boosters are temporary multipliers" and "&8-> &4You can buy them from /buy and /gemshop" and "&8-> &4Win REAL LIFE money!"
+        format gui slot 22 of player with shiny book named "&4Rules &8| &c/rules" with lore " " and "&cWhat are rules?" and "&8-> &4Rules are stuff that YOU MUST follow at all times" and "&8-> &4Not following the rules will get you PUNISHED" and "&8-> &4See anyone breaking the rules? Do /report!"
+        format gui slot 24 of player with shiny tripwire hook named "&4Reports &8| &c/report" with lore " " and "&cWhat are reports?" and "&8-> &4Reports help staff members catch / ban hackers" and "&8-> &4If you catch someone breaking the rules, Don't freak out" and "&8-> &4Do /report instead!"
+
+command /payouts:
+    trigger:
+        send "{@prefix} Payouts are listed on the discord! &c/discord" to sender
+
+command /toggletntrun:
+    permission: op
+    trigger:
+        if {tntrun} is not set:
+            set {tntrun} to "false"
+        if {tntrun} = "false":
+            set {tntrun} to "true"
+            stop
+        if {tntrun} = "true":
+            set {tntrun} to "false"
+            stop
+
+on walk on tnt:
+    {tntrun} = "true"
+    set block at location of event-block to air
+
+command /rules:
+    trigger:
+        send "{@borders}" to player
+        send "&4Rules" to player
+        send "&7 " to player
+        send "&c1: &4No Hacking" to player
+        send "&c2: &4No Exploiting bugs (Report them in the /discord!)" to player
+        send "&c3: &4No Glitching" to player
+        send "&c4: &4No Boosting AT ALL!" to player
+        send "&c5: &4No Macros" to player
+        send "&c6: &4No Disrespect" to player
+        send "&c7: &4No ALTS RULE!" to player
+        send "&c8: &4No Advertising" to player
+        send "&c9: &4No Overuse of curse words" to player
+        send "{@borders}" to player
+
+command /start:
+    trigger:
+        if {started::%uuid of player%} = true:
+            stop
+        execute player command "/kit start"
+        execute player command "/plot auto"
+        set {started::%uuid of player%} to true
+
+# Spawn Command
+command /spawn [<player>]:
+    trigger:
+        if {spawnloc} is not set:
+            send "{@prefix} The spawnpoint isn't set, If you are an admin, set it by using &4/setspawn" to sender
+            stop
+        if {spawnloc} is set:
+            if arg-1 is not set:
+                teleport player to {spawnloc}
+                send "{@prefix} You teleported to spawn!" to player
+            if arg-1 is set:
+                arg-1 is online
+                teleport arg-1 to {spawnloc}
+                send "{@prefix} You teleported &4%arg-1% &7to spawn!" to sender
+                send "{@prefix} You were teleported to spawn!" to arg-1
+                alertStaff("&4%sender% &cteleported &4%arg-1% &cto spawn")
+
+# Setspawn Command
+command /setspawn:
+    permission: spawn.set
+    permission message: {@prefix} You don't have permission to do this!
+    trigger:
+        set {spawnloc} to location of player
+        send "{@prefix} You set the spawnpoint to your location!" to player
+
+# Warp Command
+command /warp [<string>] [<player>]:
+    trigger:
+        if arg-1 is not set:
+            send "{@borders}" to player
+            send "&4Warps" to player
+            send "&7 " to player
+            loop {warps::*}:
+                send "&c%loop-index%" to player
+            send "{@borders}" to player
+            stop
+        loop {warps::*}:
+            loop-index = arg-1
+            if arg-2 is set:
+                if hasPermission(player, "warp.otherplayer") = true:
+                    teleport arg-2 to location of {warps::%arg-1%}
+                    send "{@prefix} You were teleported to warp &4%arg-1%" to arg-2
+                    send "{@prefix} You teleported &4%arg-2% &7to &4%arg-1%" to player
+                    alertStaff("&4%sender% &cwarped &4%arg-2% &cto &4%arg-1%")
+                    stop
+            teleport player to location of {warps::%arg-1%}
+            send "{@prefix} You were teleported to the &4%arg-1% &7warp!" to player
+            stop
+        send "{@prefix} That isn't a warp." to player
+
+# Setwarp Command
+command /setwarp [<string>]:
+    permission: warp.set
+    permission message: {@prefix} You don't have permission to do this!
+    trigger:
+        set {warps::%arg-1%} to location of player
+        send "{@prefix} You set the location of &4%arg-1% &7to your location!" to player
+        alertStaff("&4%sender% &cset the warp &4%arg-1% &cto their location")
+        stop
+
+# Delwarp Command
+command /delwarp [<string>]:
+    permission: warp.delete
+    permission message: {@prefix} You don't have permission to do this!
+    trigger:
+        loop {warps::*}:
+            loop-index = arg-1
+            delete {warps::%arg-1%}
+            send "{@prefix} You deleted the warp &4%arg-1%" to player
+            alertStaff("&4%sender% &cdeleted the warp &4%arg-1%")
+            stop
+        send "{@prefix} That isn't a warp." to player
+
+# Chat Color Command
+command /chatcolor:
+    permission: chatcolor.use
+    permission message: {@prefix} You don't have &4chatcolor, &7get it @ &4/buy!
+    aliases: /cc
+    trigger:
+        open chest inventory with 4 rows named "&4Chat Color" to player
+        fillInventory(player, 36)
+        format gui slot 10 of player with name tag named "&7GRAY" to run function setChatColor(player, "&7")
+        format gui slot 11 of player with name tag named "&fWHITE" to run function setChatColor(player, "&f")
+        format gui slot 12 of player with name tag named "&eYELLOW" to run function setChatColor(player, "&e")
+        format gui slot 13 of player with name tag named "&cRED" to run function setChatColor(player, "&c")
+        format gui slot 14 of player with name tag named "&6GOLD" to run function setChatColor(player, "&6")
+        format gui slot 15 of player with name tag named "&bAQUA" to run function setChatColor(player, "&b")
+        format gui slot 16 of player with name tag named "&3DARK AQUA" to run function setChatColor(player, "&3")
+        format gui slot 21 of player with name tag named "&dPINK" to run function setChatColor(player, "&d")
+        format gui slot 22 of player with name tag named "&9PURPLE" to run function setChatColor(player, "&9")
+        format gui slot 23 of player with name tag named "&5MAGENTA" to run function setChatColor(player, "&5")
+
+# Chat Tags Command
+command /tags:
+    permission: chattag.use
+    permission message: {@prefix} You don't have &4chattags, &7get it @ &4/buy!
+    trigger:
+        open chest inventory with 5 rows named "&4Chat Tags" to player
+        fillInventory(player, 45)
+        format gui slot 9 of player with green stained glass pane named "&aBASIC TAGS"
+        format gui slot 10 of player with name tag named "&8[&6GAYMER&8]" to run function setChatTag(player, "&8[&6GAYMER&8]", "chattag.gaymer")
+        format gui slot 11 of player with name tag named "&8[&dNOSLEEP&8]" to run function setChatTag(player, "&8[&dNOSLEEP&8]", "chattag.nosleep")
+        format gui slot 12 of player with name tag named "&8[&2SMOLPP&8]" to run function setChatTag(player, "&8[&2SMOLPP&8]", "chattag.smolpp")
+        format gui slot 18 of player with blue stained glass pane named "&bDEMONIC TAGS"
+        format gui slot 19 of player with name tag named "&8[&aBITCHPLZ&8]" to run function setChatTag(player, "&8[&aBITCHPLZ&8]", "chattag.bitchplz")
+        format gui slot 20 of player with name tag named "&8[&ePEEVEEPEE&8]" to run function setChatTag(player, "&8[&ePEEVEEPEE&8]", "chattag.peeveepee")
+        format gui slot 21 of player with name tag named "&8[&3BIGPP&8]" to run function setChatTag(player, "&8[&3BIGPP&8]", "chattag.bigpp")
+        format gui slot 27 of player with red stained glass pane named "&4LEGENDARY TAGS"
+        format gui slot 28 of player with name tag named "&8[&4ELITE&8]" to run function setChatTag(player, "&8[&4ELITE&8]", "chattag.elite")
+        format gui slot 29 of player with name tag named "&8[&cP2W&8]" to run function setChatTag(player, "&8[&cP2W&8]", "chattag.p2w")
+        format gui slot 30 of player with name tag named "&8[&9ECOBREAKER&8]" to run function setChatTag(player, "&8[&9ECOBREAKER&8]", "chattag.ecobreaker")
+
+command /ranks:
+    trigger:
+        open chest inventory with 5 rows named "&4Ranks" to player
+        fillInventory(player, 45)
+        format gui slot 11 of player with coal named "&7[FARMER+]" with lore " " and "&4Perks:" and "&7- &cChat Tag: &8[&6GAYMER&8]" and "&7- &cPrefix: &7[FARMER+] &f%player%" and "&7- &c2 Plots" and "&cCOST: &4$50,000" to run:
+            if getBalance(player) >= 50000:
+                removeBalance(player, 50000)
+                execute console command "/lp user %player% parent addtemp farmerplus 1w"
+                send "{@prefix} You bought FARMER rank!" to player
+                stop
+        format gui slot 12 of player with iron ingot named "&2[HARVESTOR]" with lore " " and "&4Perks:" and "&7- &cALL OF FARMER+" and "&7- &cPrefix: &2[HARVESTOR] &f%player%" and "&7- &c3 Plots" and "&7- &c/fly" and "&cCOST: &4$250,000" to run:
+            if getBalance(player) >= 250000:
+                removeBalance(player, 250000)
+                execute console command "/lp user %player% parent addtemp harvestor 1w"
+                send "{@prefix} You bought HARVESTOR rank!" to player
+                stop
+        format gui slot 13 of player with gold ingot named "&a[DONOR]" with lore " " and "&4Perks:" and "&7- &cALL OF FARMER+" and "&7- &cChat Tag: &8[&6GAYMER&8]" and "&7- &cPrefix: &a[DONOR] &f%player%" and "&7- &c2 Plots" and "&7- &c/kits: food" and "&7- &c1.1X SELLWAND & MULTIPLIER" and "&cCOST: &4$5 USD" to run player command "/buy"
+        format gui slot 14 of player with redstone named "&2[MVP] &4(BEST RANK)" with lore " " and "&4Perks:" and "&7- &cALL OF DONOR" and "&7- &cChat Tag: &8[&dNOSLEEP&8], &8[&2SMOLPP&8]" and "&7- &cHoe Autoplanter" and "&7- &c/pv 1" and "&7- &cPrefix: &2[MVP] &f%player%" and "&7- &c2 Plots" and "&7- &c/kits: food" and "&7- &c1.2X SELLWAND & MULTIPLIER" and "&7- &c/chatcolor" and "&cCOST: &4$10 USD" to run player command "/buy"
+        format gui slot 15 of player with lapis lazuli named "&9[PRO]" with lore " " and "&4Perks:" and "&7- &cALL OF MVP" and "&7- &cChat Tag: &8[&aBITCHPLZ&8]" and "&7- &c/pv 2" and "&7- &cPrefix: &9[PRO] &f%player%" and "&7- &c3 Plots" and "&7- &c1.3X SELLWAND & MULTIPLIER" and "&7- &c/fly, /feed, /nick" and "&cCOST: &4$15 USD" to run player command "/buy"
+        format gui slot 21 of player with diamond named "&e[LORD]" with lore " " and "&4Perks:" and "&7- &cALL OF PRO" and "&7- &cChat Tag: &8[&ePEEVEEPEE&8], &8[&3BIGPP&8]" and "&7- &c/pv 3" and "&7- &cPrefix: &e[LORD] &f%player%" and "&7- &c4 Plots" and "&7- &c1.4X SELLWAND & MULTIPLIER" and "&7- &c/fly, /feed, /nick, /kit tools, /workbench, /ext" and "&cCOST: &4$20 USD" to run player command "/buy"
+        format gui slot 22 of player with emerald named "&6[OVERLORD]" with lore " " and "&4Perks:" and "&7- &cALL OF LORD" and "&7- &cChat Tag: &cALL TAGS" and "&7- &c/pv 4" and "&7- &cPrefix: &6[OVERLORD] &f%player%" and "&7- &c4 Plots" and "&7- &c1.5X SELLWAND & MULTIPLIER" and "&7- &c/ci, /kit netherite" and "&cCOST: &4$25 USD" to run player command "/buy"
+        format gui slot 23 of player with netherite ingot named "&b[DEMON]" with lore " " and "&4Perks:" and "&7- &cALL OF OVERLORD" and "&7- &c/pv 6" and "&7- &cPrefix: &b[DEMON] &f%player%" and "&7- &c5 Plots" and "&7- &c1.6X SELLWAND & MULTIPLIER" and "&cCOST: &4$35 USD" to run player command "/buy"
+        format gui slot 31 of player with shiny netherite ingot named "&3[DEMON+]" with lore " " and "&4Perks:" and "&7- &cALL OF DEMON" and "&7- &c/pv 8, /afk" and "&7- &cCHAT MUTE BYPASS &4(idk why)" and "&7- &cPrefix: &3[DEMON+] %player%" and "&7- &c6 Plots" and "&7- &c1.7X SELLWAND & MULTIPLIER" and "&cCOST: &4$40 USD" to run player command "/buy"
+
+# Quit Event
+on quit:
+    if hasPermission(player, "staff") = true:
+        set quit message to "&4STAFF QUIT &7- &c%{nick::%uuid of player%} ? name of player%"
+        stop
+    if hasPermission(player, "donor") = true:
+        set quit message to "&4DONATOR QUIT &7- &c%{nick::%uuid of player%} ? name of player%"
+        stop
+    set quit message to "&4Leave &7- &c%{nick::%uuid of player%} ? name of player%"
+
+# Join Event
+on join:
+    playSound(player, "BLOCK_NOTE_BLOCK_PLING", 0)
+    if {joins::*} does not contain uuid of player:
+        add uuid of player to {joins::*}
+        teleport player to location at {spawnloc}
+        clear inventory of player
+        if {donationgoal::*} is not set:
+            set {donationgoal::current} to 0
+            set {donationgoal::goal} to 100
+        setBalance(player, 0)
+        setMultiplier(player, 1.0)
+        setGems(player, 0)
+        setChatColor(player, "&7")
+        set {cropcollector::amount::%uuid of player%} to 0
+        set {cropcollector::limit::%uuid of player%} to 20
+        clearChat(player, 1000)
+        send "{@borders}" to player
+        send "&7Welcome to {@name}, &7%displayname of player%" to player
+        send "&7You are the &4%size of {joins::*}%&4th &7join!" to player
+        send "&r" to player
+        send "&7Store: &4{@buycraft}" to player
+        send "&7Dicsord: &4{@discord}" to player
+        send "&7Server IP: &4{@serverip}" to player
+        send "&r" to player
+        send "&7&o(( To start your farming, /start! ))" to player
+        send "{@borders}" to player
+        set join message to "&4NEW JOIN &7- &c%{nick::%uuid of player%} ? name of player% &7(##%size of {joins::*}%)"
+        stop    
+    if {joins::*} contain uuid of player:
+        if getBalance(player) = "N/A":
+            setBalance(player, 0)
+        if getMultiplier(player) = "N/A":
+            setMultiplier(player, 0)
+        if getGems(player) = "N/A":
+            setGems(player, 0)
+        if {cropcollector::amount::%uuid of player%} is not set:
+            set {cropcollector::amount::%uuid of player%} to 0
+        if {cropcollector::limit::%uuid of player%} is not set:
+            set {cropcollector::limit::%uuid of player%} to 20
+        clearChat(player, 1000)
+        send "{@borders}" to player
+        send "&7Welcome back to {@name}, &7%displayname of player%" to player
+        send "&r" to player
+        send "&7Store: &4{@buycraft}" to player
+        send "&7Dicsord: &4{@discord}" to player
+        send "&7Server IP: &4{@serverip}" to player
+        send "{@borders}" to player
+        if hasPermission(player, "staff") = true:
+            set join message to "&4STAFF JOIN &7- &c%{nick::%uuid of player%} ? name of player%"
+            stop
+        if hasPermission(player, "donor") = true:
+            set join message to "&4DONATOR JOIN &7- &c%{nick::%uuid of player%} ? name of player%"
+            stop
+        set join message to "&4Join &7- &c%{nick::%uuid of player%} ? name of player%"
+
+on quit:
+    if hasPermission(player, "staff") = true:
+        set quit message to "&4STAFF LEAVE &7- &c%{nick::%uuid of player%} ? name of player%"
+        stop
+    if hasPermission(player, "donor") = true:
+        set quit message to "&4DONATOR LEAVE &7- &c%{nick::%uuid of player%} ? name of player%"
+        stop
+    set quit message to ""
+
+# Updatedonos
+command /updatedonos [<number>]:
+    permission: update.donos
+    trigger:
+        add arg-1 to {donationgoal::current}
+
+command /discord:
+    trigger:
+        send "{@prefix} Join the discord here! &chttps://discord.gg/AxFRn45" to player
+
+# Chat Formatting
+on chat:
+    if {mutechat} is "true":
+        if player has permission "chat.bypass":
+            set chat format to "%prefix of player%%{nick::%uuid of player%} ? displayname of player%%suffix of player% &8- %coloured {chatcolor::%uuid of player%}%%message%"
+            stop
+        cancel event
+    if {mutechat} is "false":
+        set chat format to "%prefix of player%%{nick::%uuid of player%} ? displayname of player%%suffix of player% &8- %coloured {chatcolor::%uuid of player%}%%message%"
+        stop
+
+on swap hand items:
+    cancel event
+
+# Clearchat:
+command /clearchat [<string = "No Reason">]:
+    permission: clear.chat
+    trigger:
+        loop all players:
+            loop 1000 times:
+                send "" to loop-player
+            send "{@borders}" to loop-player
+            send "&4Moderation" to loop-player
+            send "&7 " to loop-player
+            send "&4%sender% &7cleared chat!" to loop-player
+            send "&cReason: &4%arg-1%" to loop-player
+            send "{@borders}" to loop-player
+
+# Broadcast
+command /broadcast [<string>]:
+    permission: broad.crast
+    trigger:
+        arg-1 is set
+        broadcast "{@borders}"
+        broadcast "&4Broadcast"
+        broadcast "&7 "
+        broadcast "&c%arg-1%"
+        broadcast "{@borders}"
+
+# Mutechat
+command /mutechat [<string = "No Reason">]:
+    permission: mute.chat
+    trigger:
+        if {mutechat} is not set:
+            set {mutechat} to "false"
+        if {mutechat} is "true":
+            set {mutechat} to "false"
+            broadcast "{@borders}"
+            broadcast "&4Moderation"
+            broadcast "&7 "
+            broadcast "&4%sender% &7unmuted chat!"
+            broadcast "&cReason: &4%arg-1%"
+            broadcast "{@borders}"
+            stop
+        if {mutechat} is "false":
+            set {mutechat} to "true"
+            broadcast "{@borders}"
+            broadcast "&4Moderation"
+            broadcast "&7 "
+            broadcast "&4%sender% &7muted chat!"
+            broadcast "&cReason: &4%arg-1%"
+            broadcast "{@borders}"
+            stop

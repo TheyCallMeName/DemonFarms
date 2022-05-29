@@ -1,0 +1,586 @@
+# --------------- #
+#   DEMONIC API   #
+# --------------- #
+# => LIST OF USABLE FUNCITONS {
+# =>    capitalize("string")
+# =>    alertStaff("string")
+# =>    clearChat(player, count)
+# =>    scoreboard(player)
+# =>    tablist(player, "header", "footer", "tabname of player")
+# =>    getBalance(player)
+# =>    setBalance(player, count)
+# =>    addBalance(player, count)
+# =>    removeBalance(player, count)
+# =>    getMultiplier(player)
+# =>    setMultiplier(player, count)
+# =>    addMultiplier(player, count)
+# =>    removeMultiplier(player, count)
+# =>    getGems(player)
+# =>    setGems(player, count)
+# =>    addGems(player, count)
+# =>    removeGems(player, count)
+# =>    hasPermission(player, "permission")
+# =>    sendTitle(player, "stitle", duration, isfrombuy)
+# =>    playSound(player, "sound", pitch)
+# =>    getServerStatus(TPS)
+# =>    setChatColor(player, "color code")
+# =>    fillInventory(player, count)
+# =>    setChatTag(player, "chat tag", "permission")
+# =>    buyCommand(player, cost, "item name", "command")
+# =>    buyItem(player, cost, item)
+# =>    sellItem(player, price, item)
+# =>    returnTime("string")
+# => }
+
+options:
+    prefix: &8[&4Demon Farms&8]&7
+    borders: &7&m          &c&m            &4&m            &c&m            &7&m          &r
+
+# Capitalzation
+on script load:
+    delete {letters::*}
+    wait 10 ticks
+    set {_letters} to "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz"
+    set {_pairedletters::*} to {_letters} split at " "
+    loop {_pairedletters::*}:
+        set {_pair::*} to loop-value split at ""
+        set {_uppercase} to {_pair::1}
+        set {_lowercase} to {_pair::2}
+        set {letters::uppercase::%{_lowercase}%} to {_uppercase}
+        set {letters::lowercase::%{_uppercase}%} to {_lowercase}
+
+function capitalize(msg: string) :: string:
+    set {_char} to the first character of {_msg}
+    set {_char} to {letters::uppercase::%{_char}%}
+    set {_remaining} to ""
+    set {_remaining} to the last (length of {_msg} - 1) characters of {_msg}
+    return "%{_char}%%{_remaining}%"
+
+# Alert Staff
+function alertStaff(message: string):
+    loop all players:
+        hasPermission(loop-player, "staff.alerts") = true
+        send "&c[STAFF] %{_message}%" to loop-player
+
+# Clear Chat
+function clearChat(plr: player, cout: integer):
+    loop {_cout} times:
+        send "&7 " to {_plr}
+
+# Scoreboard & Tablist
+function scoreboard(plr: player):
+    set {_uuid} to uuid of {_plr}
+    wipe {_plr}'s sidebar
+    set name of sidebar of {_plr} to "&4Demon Farms &7| &cIII &7(%number of online players + {lol}%/35)"
+    set score "&7" in sidebar of {_plr} to 15
+    set score "&4&lPLAYER:" in sidebar of {_plr} to 14
+    set score "&c➥ &7Balance: &4$%getBalance({_plr})%" in sidebar of {_plr} to 13
+    set score "&c➥ &7Ping: &4%ping of {_plr}%" in sidebar of {_plr} to 12
+    set score "&c➥ &7Multiplier: &4x%getMultiplier({_plr})%" in sidebar of {_plr} to 11
+    set score "&c➥ &7Gems: &4%getGems({_plr})%" in sidebar of {_plr} to 10
+    set score "&c" in sidebar of {_plr} to 8
+    set score "&4&lSERVER:" in sidebar of {_plr} to 7
+    set score "&c➥ &7Joins: &4%size of {joins::*}%" in sidebar of {_plr} to 6
+    set score "&c➥ &7Dono Goal: &4$%{donationgoal::current} ? 0%/%{donationgoal::goal} ? 0%" in sidebar of {_plr} to 5
+    set {_status} to getServerStatus(tps from the last minute)
+    set score "&c➥ &7TPS: &4%tps from the last minute% &7(%{_status}%)" in sidebar of {_plr} to 4
+    set score "&a" in sidebar of {_plr} to 3
+    set score "&c&oDemonFarms.minehut.gg       " in sidebar of {_plr} to 2
+
+function tablist(plr: player, head: string, foot: string, name: string):
+    set the tablist header of {_plr} to "%{_head}%"
+    set the tablist footer of {_plr} to "%{_foot}%"
+    set {_plr}'s tab name to {_name}
+
+# Economy
+function getBalance(plr: player) :: object:
+    set {_uuid} to uuid of {_plr}
+    return {economy::balance::%{_uuid}%} ? "N/A"
+
+function setBalance(plr: player, cout: number):
+    set {_uuid} to uuid of {_plr}
+    set {economy::balance::%{_uuid}%} to {_cout}
+
+function addBalance(plr: player, cout: number) :: boolean:
+    set {_uuid} to uuid of {_plr}
+    if {_cout} > 0:
+        add {_cout} to {economy::balance::%{_uuid}%}
+        return true
+    if {_cout} < 0:
+        return false
+
+function removeBalance(plr: player, cout: number) :: boolean:
+    set {_uuid} to uuid of {_plr}
+    if {_cout} > 0:
+        remove {_cout} from {economy::balance::%{_uuid}%}
+
+# Multipliers
+function getMultiplier(plr: player) :: object:
+    set {_uuid} to uuid of {_plr}
+    return {multiplers::player::%{_uuid}%}  ? "N/A"
+
+function setMultiplier(plr: player, cout: number):
+    set {_uuid} to uuid of {_plr}
+    set {multiplers::player::%{_uuid}%} to {_cout}
+
+function addMultiplier(plr: player, cout: number) :: boolean:
+    set {_uuid} to uuid of {_plr}
+    if {_cout} > 0:
+        add {_cout} to {multiplers::player::%{_uuid}%}
+        return true
+    if {_cout} < 0:
+        return false
+
+function removeMultiplier(plr: player, cout: number) :: boolean:
+    set {_uuid} to uuid of {_plr}
+    if {_cout} > 0:
+        remove {_cout} from {multiplers::player::%{_uuid}%}
+        return true
+    if {_cout} < 0:
+        return false
+
+# Gems
+function getGems(plr: player) :: object:
+    set {_uuid} to uuid of {_plr}
+    return {gems::amount::%{_uuid}%} ? "N/A"
+
+function setGems(plr: player, cout: integer):
+    set {_uuid} to uuid of {_plr}
+    set {gems::amount::%{_uuid}%} to 0
+
+function addGems(plr: player, cout: number) :: boolean:
+    set {_uuid} to uuid of {_plr}
+    if {_cout} > 0:
+        add {_cout} to {gems::amount::%{_uuid}%}
+        return true
+    if {_cout} < 0:
+        return false
+
+function removeGems(plr: player, cout: number) :: boolean:
+    set {_uuid} to uuid of {_plr}
+    if {_cout} > 0:
+        remove {_cout} from {gems::amount::%{_uuid}%}
+        return true
+    if {_cout} < 0:
+        return false
+
+# Permission Check
+function hasPermission(plr: player, perm: string) :: boolean:
+    if {_plr} has permission "%{_perm}%":
+        return true
+    else if {_plr} does not have permission "%{_perm}%":
+        return false
+
+# Send Title
+function sendTitle(plr: player, stitle: string, dura: timespan):
+    set {_string::*} to split {_stitle} at " "
+    set {_place} to 1
+    loop {_string::*}:
+        if {_place} >= (size of {_string::*}):
+            playSound({_plr}, "BLOCK_NOTE_BLOCK_PLING", 15)
+        if {_place} < (size of {_string::*}):
+            playSound({_plr}, "BLOCK_NOTE_BLOCK_PLING", 5)
+        send title "&4/buy sale" with subtitle coloured loop-value to {_plr} for {_dura}
+        add 1 to {_place}
+        wait {_dura}
+
+# Play Sound
+function playSound(plr: player, sound: string, pitch: number):
+    play sound "%{_sound}%" for {_plr} with volume 1 with pitch {_pitch}
+
+# Server Status
+function getServerStatus(tps: number) :: string:
+    if {_tps} < 5.0:
+        return "OK WHAT"
+    if {_tps} < 10.0:
+        return "Unplayable"
+    if {_tps} < 13.0:
+        return "Horrible"
+    if {_tps} < 15.0:
+        return "Bad"
+    if {_tps} < 17.0:
+        return "Average"
+    if {_tps} < 19.0:
+        return "Good"
+    if {_tps} > 19.99:
+        return "Great"
+
+# Chat Color
+function setChatColor(plr: player, color: string):
+    set {_uuid} to uuid of {_plr}
+    set {chatcolor::%{_uuid}%} to "%{_color}%"
+
+# Fill Inventory
+function fillInventory(plr: player, cout: integer):
+    set {_num} to 0
+    loop {_cout} times:
+        format gui slot {_num} of {_plr} with gray stained glass pane
+        add 1 to {_num}
+        format gui slot {_num} of {_plr} with red stained glass pane
+        add 1 to {_num}
+
+# Chat Tags
+function setChatTag(plr: player, tag: string, perm: string):
+    if hasPermission({_plr}, {_perm}) = true:
+        execute console command "lp user %{_plr}% meta setsuffix "" %{_tag}%"""
+    else if hasPermission({_plr}, {_perm}) = false:
+        send "{@prefix} You don't own the tag %{_tag}%, &7Get it @ &4/buy!" to {_plr}
+
+# Shop Buy Command Item
+function buyCommand(plr: player, cost: number, iname: string, command: string):
+    if getBalance({_plr}) >= {_cost}:
+        removeBalance({_plr}, {_cost})
+        send "{@prefix} You bought &4%{_iname}% &7for &4$%{_cost}%&4!" to {_plr}
+        execute console command "%{_command}%"
+    else:
+        send "{@prefix} You don't have enough for &4%{_iname}%" to {_plr}
+
+# Shop Buy Item
+function buyItem(plr: player, cost: number, iToGive: itemtype):
+    set {_uuid} to uuid of {_plr}
+    set {shop::tempdata::buyAmount::%{_uuid}%} to 0
+    set {_amount} to 0
+    set {_name} to "&4Shop &8- &cBuying"
+    replace " item" in {_name} with ""
+    open chest inventory with 1 row named {_name} to {_plr}
+    format gui slot 0 of {_plr} with red stained glass pane named "&4REMOVE 64" to run:
+        remove 64 from {shop::tempdata::buyAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oPURCHASE" with lore "&cAmount: &4%{shop::tempdata::buyAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::buyAmount::%{_uuid}%} * {_cost}%" to run:
+            buyItemHelper({_plr}, {_cost}, {shop::tempdata::buyAmount::%{_uuid}%}, {_iToGive})
+    format gui slot 1 of {_plr} with red stained glass pane named "&4REMOVE 10" to run:
+        remove 10 from {shop::tempdata::buyAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oPURCHASE" with lore "&cAmount: &4%{shop::tempdata::buyAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::buyAmount::%{_uuid}%} * {_cost}%" to run:
+            buyItemHelper({_plr}, {_cost}, {shop::tempdata::buyAmount::%{_uuid}%}, {_iToGive})
+    format gui slot 2 of {_plr} with red stained glass pane named "&4REMOVE 1" to run:
+        remove 1 from {shop::tempdata::buyAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oPURCHASE" with lore "&cAmount: &4%{shop::tempdata::buyAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::buyAmount::%{_uuid}%} * {_cost}%" to run:
+            buyItemHelper({_plr}, {_cost}, {shop::tempdata::buyAmount::%{_uuid}%}, {_iToGive})
+    format gui slot 6 of {_plr} with green stained glass pane named "&2ADD 1" to run:
+        add 1 to {shop::tempdata::buyAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oPURCHASE" with lore "&cAmount: &4%{shop::tempdata::buyAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::buyAmount::%{_uuid}%} * {_cost}%" to run:
+            buyItemHelper({_plr}, {_cost}, {shop::tempdata::buyAmount::%{_uuid}%}, {_iToGive})
+    format gui slot 7 of {_plr} with green stained glass pane named "&2ADD 10" to run:
+        add 10 to {shop::tempdata::buyAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oPURCHASE" with lore "&cAmount: &4%{shop::tempdata::buyAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::buyAmount::%{_uuid}%} * {_cost}%" to run:
+            buyItemHelper({_plr}, {_cost}, {shop::tempdata::buyAmount::%{_uuid}%}, {_iToGive})
+    format gui slot 8 of {_plr} with green stained glass pane named "&2ADD 64" to run:
+        add 64 to {shop::tempdata::buyAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oPURCHASE" with lore "&cAmount: &4%{shop::tempdata::buyAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::buyAmount::%{_uuid}%} * {_cost}%" to run:
+            buyItemHelper({_plr}, {_cost}, {shop::tempdata::buyAmount::%{_uuid}%}, {_iToGive})
+    format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oPURCHASE" with lore "&cAmount: &4%{shop::tempdata::buyAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::buyAmount::%{_uuid}%} * {_cost}%" to run:
+        buyItemHelper({_plr}, {_cost}, {shop::tempdata::buyAmount::%{_uuid}%}, {_iToGive})
+
+# Shop Buy Item Helper
+function buyItemHelper(plr: player, cost: number, amount: number, iToGive: itemtype):
+    if {_amount} <= 0:
+        send "{@prefix} Amount has to be more than 1!" to {_plr}
+        stop
+    if getBalance({_plr}) >= ({_cost} * {_amount}):
+        removeBalance({_plr}, ({_cost} * {_amount}))
+        give {_amount} of {_iToGive} to {_plr}
+        set {_message} to "{@prefix} You bought &4x%{_amount}% &7of &4%{_iToGive}%&4!"
+        replace " item" in {_message} with ""
+        send {_message} to {_plr}
+    else:
+        set {_message} to "{@prefix} You don't have enough for &4x%{_amount}% &7of &4%{_iToGive}%&4!"
+        replace " item" in {_message} with ""
+        send {_message} to {_plr}
+
+# Shop Sell Item
+function sellItem(plr: player, cost: number, iToSell: itemtype):
+    set {_uuid} to uuid of {_plr}
+    set {shop::tempdata::sellAmount::%{_uuid}%} to 0
+    set {_amount} to 0
+    set {_name} to "&4Shop &8- &cSelling"
+    open chest inventory with 1 row named {_name} to {_plr}
+    format gui slot 0 of {_plr} with red stained glass pane named "&4REMOVE 64" to run:
+        remove 64 from {shop::tempdata::sellAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oSELL" with lore "&cAmount: &4%{shop::tempdata::sellAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::sellAmount::%{_uuid}%} * {_cost}%" to run:
+            sellItemHelper({_plr}, {_cost}, {shop::tempdata::sellAmount::%{_uuid}%}, {_iToSell})
+    format gui slot 1 of {_plr} with red stained glass pane named "&4REMOVE 10" to run:
+        remove 10 from {shop::tempdata::sellAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oSELL" with lore "&cAmount: &4%{shop::tempdata::sellAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::sellAmount::%{_uuid}%} * {_cost}%" to run:
+            sellItemHelper({_plr}, {_cost}, {shop::tempdata::sellAmount::%{_uuid}%}, {_iToSell})
+    format gui slot 2 of {_plr} with red stained glass pane named "&4REMOVE 1" to run:
+        remove 1 from {shop::tempdata::sellAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oSELL" with lore "&cAmount: &4%{shop::tempdata::sellAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::sellAmount::%{_uuid}%} * {_cost}%" to run:
+            sellItemHelper({_plr}, {_cost}, {shop::tempdata::sellAmount::%{_uuid}%}, {_iToSell})
+    format gui slot 6 of {_plr} with green stained glass pane named "&2ADD 1" to run:
+        add 1 to {shop::tempdata::sellAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oSELL" with lore "&cAmount: &4%{shop::tempdata::sellAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::sellAmount::%{_uuid}%} * {_cost}%" to run:
+            sellItemHelper({_plr}, {_cost}, {shop::tempdata::sellAmount::%{_uuid}%}, {_iToSell})
+    format gui slot 7 of {_plr} with green stained glass pane named "&2ADD 10" to run:
+        add 10 to {shop::tempdata::sellAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oSELL" with lore "&cAmount: &4%{shop::tempdata::sellAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::sellAmount::%{_uuid}%} * {_cost}%" to run:
+            sellItemHelper({_plr}, {_cost}, {shop::tempdata::sellAmount::%{_uuid}%}, {_iToSell})
+    format gui slot 8 of {_plr} with green stained glass pane named "&2ADD 64" to run:
+        add 64 to {shop::tempdata::sellAmount::%{_uuid}%}
+        format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oSELL" with lore "&cAmount: &4%{shop::tempdata::sellAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::sellAmount::%{_uuid}%} * {_cost}%" to run:
+            sellItemHelper({_plr}, {_cost}, {shop::tempdata::sellAmount::%{_uuid}%}, {_iToSell})
+    format gui slot 4 of {_plr} with barrier named "&cClick Me to &4&oSELL" with lore "&cAmount: &4%{shop::tempdata::sellAmount::%{_uuid}%}% &7| &cCost: &4%{shop::tempdata::sellAmount::%{_uuid}%} * {_cost}%" to run:
+        sellItemHelper({_plr}, {_cost}, {shop::tempdata::sellAmount::%{_uuid}%}, {iToSell})
+
+# Shop Sell Item Helper
+function sellItemHelper(plr: player, price: number, amount: number, iToSell: itemtype):
+    if {_amount} <= 0:
+        send "{@prefix} Amount has to be more than 1!" to {_plr}
+        stop
+    if inventory of {_plr} contains {_iToSell}:
+        set {_itemAmount} to amount of {_iToSell} in inventory of {_plr}
+        if {_itemAmount} >= {_amount}:
+            remove {_amount} of {_iToSell} from inventory of {_plr}
+            addBalance({_plr}, ({_price} * {_amount}))
+            set {_message} to "{@prefix} You sold &4x%{_amount}% &7of &4%{_iToSell}% &7for &4$%{_price} * {_amount}%"
+            replace " item" in {_message} with ""
+            send {_message} to {_plr}
+            stop
+        else:
+            set {_message} to "{@prefix} You don't even have &4%{_amount}% &7of &4%{_iToSell}%&4!"
+            replace " item" in {_message} with ""
+            send {_message} to {_plr}
+    else:
+        set {_message} to "{@prefix} You don't even have &4%{_amount}% &7of &4%{_iToSell}%&4!"
+        replace " item" in {_message} with ""
+        send {_message} to {_plr}
+
+# String To Time
+function returnTime(returnTime: string) :: object:
+    if {_returnTime} contains "s":
+        set {_time::*} to split {_returnTime} at "s"
+        set {_number} to ({_time::1} parsed as an integer)
+        return {_number} * 1
+        stop
+    if {_returnTime} contains "m":
+        set {_time::*} to split {_returnTime} at "m"
+        set {_number} to ({_time::1} parsed as an integer)
+        return {_number} * 60
+        stop
+    if {_returnTime} contains "h":
+        set {_time::*} to split {_returnTime} at "h"
+        set {_number} to ({_time::1} parsed as an integer)
+        return {_number} * 3600
+        stop
+    if {_returnTime} contains "d":
+        set {_time::*} to split {_returnTime} at "d"
+        set {_number} to ({_time::1} parsed as an integer)
+        return {_number} * 86400
+        stop
+    if {_returnTime} contains "w":
+        set {_time::*} to split {_returnTime} at "w"
+        set {_number} to ({_time::1} parsed as an integer)
+        return {_number} * 604800
+        stop
+    if {_returnTime} contains "mo":
+        set {_time::*} to split {_returnTime} at "mo"
+        set {_number} to ({_time::1} parsed as an integer)
+        return {_number} * 2628000
+        stop
+    return false
+
+# Economy Command
+command /eco [<string>] [<offline player>] [<number>]:
+    permission: eco.admin
+    permission message: {@prefix} You don't have permission for this command.
+    trigger:
+        if arg-1 is not set:
+            send "{@borders}" to sender
+            send "&4Eco Help" to sender
+            send "&7 " to sender
+            send "&4/eco reset player &8- &7Reset's a player" to sender
+            send "&4/eco take player amount &8- &7Takes away from a player's balance" to sender
+            send "&4/eco give player amount &8- &7Gives to a player's balance" to sender
+            send "{@borders}" to sender
+            stop
+        if arg-1 = "reset":
+            if arg-2 is not set:
+                send "{@prefix} &cUsage: &7/eco reset (player)" to sender
+                stop
+            if {joins::*} does not contain uuid of arg-2:
+                send "{@prefix} That player never played before." to sender
+                stop
+            setBalance(arg-2, 0)
+            send "{@prefix} You reset &4%arg-2%&4's &7balance" to sender
+            send "{@prefix} Your balance got reset" to arg-2 if arg-2 is online
+            alertStaff("&4%sender% &creset &4%arg-2%&4's &cb    alance")
+            stop
+        if arg-1 = "give":
+            if arg-2 or arg-3 is not set:
+                send "{@prefix} &cUsage: &7/eco give (player) (amount)" to sender
+                stop
+            if {joins::*} does not contain uuid of arg-2:
+                send "{@prefix} That player never played before." to sender
+                stop
+            arg-3 > 0
+            addBalance(arg-2, arg-3)
+            send "{@prefix} You added &4%arg-3% &7to &4%arg-2%&4's &7balance" to sender
+            send "{@prefix} You were given &4$%arg-3%" to arg-2 if arg-2 is online
+            alertStaff("&4%sender% &cadded &4$%arg-3% &cto &4%arg-2%&4's &cbalance")
+            stop
+        if arg-1 = "take":
+            if arg-2 or arg-3 is not set:
+                send "{@prefix} &cUsage: &7/eco take (player) (amount)" to sender
+                stop
+            if {joins::*} does not contain uuid of arg-2:
+                send "{@prefix} That player never played before." to sender
+                stop
+            arg-3 > 0
+            removeBalance(arg-2, arg-3)
+            send "{@prefix} You removed &4%arg-3% &7from &4%arg-2%&4's &7balance" to sender
+            send "{@prefix} &4$%arg-3% &7was taken away from your balance" to arg-2 if arg-2 is online
+            alertStaff("&4%sender% &cremoved &4$%arg-3% &cfrom &4%arg-2%&4's &cbalance")
+            stop
+
+# Pay Command
+command /pay [<player>] [<number>]:
+    trigger:
+        if arg-1 or arg-2 is not set:
+            send "{@prefix} &cUsage: &7/pay (player) (amount)" to sender
+            stop
+        if getBalance(player) < arg-2:
+            send "{@prefix} You don't have enough money!" to sender
+            stop
+        if arg-2 <= 100:
+            send "{@prefix} You have to pay atleast &4$100!" to sender
+            stop
+        removeBalance(player, arg-2)
+        addBalance(arg-1, arg-2)
+        send "{@prefix} You gave &4%arg-1% &4$%arg-2%&4!" to sender
+        send "{@prefix} &4%sender% &7gave you &4$%arg-2%&4!" to arg-1
+        alertStaff("&4%sender% &cgave &4%arg-1% &4$%arg-2%!")
+
+command /bal [<string>] [<offline player>]:
+    trigger:
+        if arg-1 is not set:
+            send "{@prefix} &cUsage: &7/bal (money / gems) (player, default -> you)" to sender
+            stop
+        if arg-1 = "gems":
+            send "{@prefix} &4%arg-2 ? name of player% &7has &4%getGems(arg-2 ? player)% &7gems!" to sender
+            stop
+        send "{@prefix} &4%arg-2 ? name of player% &7has &4%getBalance(arg-2 ? player)% &7money!" to sender
+        stop
+
+# Gems Command
+command /gem [<string>] [<offline player>] [<number>]:
+    permission: gem.admin
+    permission message: {@prefix} You don't have permission for this command.
+    trigger:
+        if arg-1 is not set:
+            send "{@borders}" to sender
+            send "&4Gems Help" to sender
+            send "&7 " to sender
+            send "&4/gem reset player &8- &7Reset's a player" to sender
+            send "&4/gem take player amount &8- &7Takes away from a player's gem balance" to sender
+            send "&4/gem give player amount &8- &7Gives to a player's gem balance" to sender
+            send "{@borders}" to sender
+            stop
+        if arg-1 = "reset":
+            if arg-2 is not set:
+                send "{@prefix} &cUsage: &7/gem reset (player)" to sender
+                stop
+            if {joins::*} does not contain uuid of arg-2:
+                send "{@prefix} That player never played before." to sender
+                stop
+            setGems(arg-2, 0)
+            send "{@prefix} You reset &4%arg-2%&4's &7gem balance" to sender
+            send "{@prefix} Your gem balance got reset" to arg-2 if arg-2 is online
+            alertStaff("&4%sender% &creset &4%arg-2%&4's &cgem balance")
+            stop
+        if arg-1 = "give":
+            if arg-2 or arg-3 is not set:
+                send "{@prefix} &cUsage: &7/gem give (player) (amount)" to sender
+                stop
+            if {joins::*} does not contain uuid of arg-2:
+                send "{@prefix} That player never played before." to sender
+                stop
+            arg-3 > 0
+            addGems(arg-2, arg-3)
+            send "{@prefix} You added &4%arg-3% &7to &4%arg-2%&4's &7gem balance" to sender
+            send "{@prefix} You were given &4%arg-3% &7gems" to arg-2 if arg-2 is online
+            alertStaff("&4%sender% &cadded &4%arg-3% &cto &4%arg-2%&4's &cgem balance")
+            stop
+        if arg-1 = "take":
+            if arg-2 or arg-3 is not set:
+                send "{@prefix} &cUsage: &7/gem take (player) (amount)" to sender
+                stop
+            if {joins::*} does not contain uuid of arg-2:
+                send "{@prefix} That player never played before." to sender
+                stop
+            arg-3 > 0
+            removeGems(arg-2, arg-3)
+            send "{@prefix} You removed &4%arg-3% &7from &4%arg-2%&4's &7gem balance" to sender
+            send "{@prefix} &4%arg-3% &7was taken away from your gem balance" to arg-2 if arg-2 is online
+            alertStaff("&4%sender% &cremoved &4%arg-3% &cfrom &4%arg-2%&4's &cgem balance")
+            stop
+
+# Mutliplier Command
+command /multiplier [<string>] [<offline player>] [<number>]:
+    permission: multiplier.admin
+    permission message: {@prefix} You don't have permission for this command.
+    trigger:
+        if arg-1 is not set:
+            send "{@borders}" to sender
+            send "&4Multiplier Help" to sender
+            send "&7 " to sender
+            send "&4/multiplier reset player &8- &7Reset's a player" to sender
+            send "&4/multiplier take player amount &8- &7Takes away from a player's gem balance" to sender
+            send "&4/multiplier give player amount &8- &7Gives to a player's gem balance" to sender
+            send "{@borders}" to sender
+            stop
+        if arg-1 = "give":
+            if arg-2 or arg-3 is not set:
+                send "{@prefix} &cUsage: &7/multiplier give (player) (amount)" to sender
+                stop
+            if {joins::*} does not contain uuid of arg-2:
+                send "{@prefix} That player never played before." to sender
+                stop
+            arg-3 > 0
+            addMultiplier(arg-2, arg-3)
+            send "{@prefix} You added &4%arg-3% &7to &4%arg-2%&4's &77multiplier" to sender
+            send "{@prefix} You were given &4%arg-3% &7multiplier" to arg-2 if arg-2 is online
+            alertStaff("&4%sender% &cadded &4%arg-3% &cto &4%arg-2%&4's &c7multiplier")
+            stop
+        if arg-1 = "take":
+            if arg-2 or arg-3 is not set:
+                send "{@prefix} &cUsage: &7/multiplier take (player) (amount)" to sender
+                stop
+            if {joins::*} does not contain uuid of arg-2:
+                send "{@prefix} That player never played before." to sender
+                stop
+            arg-3 > 0
+            removeMultiplier(arg-2, arg-3)
+            send "{@prefix} You removed &4%arg-3% &7from &4%arg-2%&4's &77multiplier" to sender
+            send "{@prefix} &4%arg-3% &7was taken away from your 7multiplier" to arg-2 if arg-2 is online
+            alertStaff("&4%sender% &cremoved &4%arg-3% &cfrom &4%arg-2%&4's &c7multiplier")
+            stop
+
+every 1 minute:
+    set {baltop::*} to sorted {economy::balance::*} from highest to lowest with format "@index^@value"
+    set {gemtop::*} to sorted {gems::amount::*} from highest to lowest with format "@index^@value"
+
+command /baltop:
+    trigger:
+        send "{@borders}" to player
+        send "&4Baltop" to player
+        send "&7 " to player
+        set {_place} to 1
+        loop {baltop::*}:
+            set {_data::*} to loop-value split at "^"
+            send "&4%{_place}%&4: &7%({_data::1} parsed as an offline player)% &8-> &c$%{_data::2}%" to player
+            add 1 to {_place}
+            if {_place} >= 11:
+                exit loop
+        send "{@borders}" to player
+
+command /gemtop:
+    trigger:
+        send "{@borders}" to player
+        send "&4Gemtop" to player
+        send "&7 " to player
+        set {_place} to 1
+        loop {gemtop::*}:
+            set {_data::*} to loop-value split at "^"
+            send "&4%{_place}%&4: &7%({_data::1} parsed as an offline player)% &8-> &c%{_data::2}% &cGems" to player
+            add 1 to {_place}
+            if {_place} >= 11:
+                exit loop
+        send "{@borders}" to player
